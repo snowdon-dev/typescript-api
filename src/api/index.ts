@@ -2,12 +2,13 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import { app } from './register';
 import { RegisterInput } from '../app/register/register.in';
-import { RegisterOutput } from '../app/register/register.out';
 import { RegisterPresenter, RegisterPresenterOutput } from './presenter/register/register.presenter';
 import { RegisterInteractor } from '../app/register/register.interactor';
 
 const expressApp: express.Application = express();
-expressApp.use(bodyParser);
+
+expressApp.use(bodyParser.urlencoded());
+expressApp.use(bodyParser.json());
 
 
 const register = async (input: RegisterInput): Promise<RegisterPresenterOutput> => {

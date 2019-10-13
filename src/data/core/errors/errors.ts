@@ -4,7 +4,7 @@ import { UserDoesNotExistsErrorImpl } from './user-does-not-exists.err.impl';
 import { UserExistsErrorImpl } from './user-exists.err.impl';
 import { ValidationErrorImpl } from './validation.err.impl';
 import { UserHasNoBalanceErrorImpl } from './user-has-no-balance.err.impl';
-import { CustomError } from '../../app/core/definitions/custom-error';
+import { CustomError } from '../../../app/core/definitions/custom-error';
 
 export const ERRORS: Record<string, CustomError> = {
   general: new GeneralErrorImpl(),

@@ -1,5 +1,4 @@
 export interface ValidatorResult {
-    valid: boolean;
-    error: {};
-  }
-  
+  valid: boolean;
+  error: {};
+}

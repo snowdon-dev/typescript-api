@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "eslint src --ext ts",
+    "lint:fix": "eslint src --ext ts --fix"
   },
   "keywords": [],
   "author": "",
@@ -23,6 +24,15 @@
     "jest": "^24.9.0",
     "joi": "^14.3.1",
     "lokijs": "^1.5.7",
-    "redis": "^2.8.0"
+    "redis": "^2.8.0",
+    "typescript": "^3.5.3",
+    "ts-node": "^6.2.0",
+    "prettier": "^1.18.2",
+    "@types/node": "^10.14.13",
+    "@typescript-eslint/eslint-plugin": "^2.0.0",
+    "@typescript-eslint/parser": "^2.0.0",
+    "eslint": "^6.2.2",
+    "eslint-config-prettier": "^6.1.0",
+    "eslint-plugin-prettier": "^3.1.0"
   }
 }

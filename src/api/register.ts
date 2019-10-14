@@ -1,6 +1,6 @@
 import { asClass, asValue, createContainer, InjectionMode } from 'awilix';
 
-import { db } from '../data/database'
+import { db } from '../data/database';
 import * as joi from 'joi';
 
 import { ApplicationErrorFactoryImpl } from '../data/core/errors/application-error-factory.impl';
@@ -12,17 +12,17 @@ import { RegisterRepositoryImpl } from '../data/register/register.repository.imp
 
 const container = createContainer({ injectionMode: InjectionMode.CLASSIC });
 container.register({
-    db: asValue(db),
-    joi: asValue(joi),
+  db: asValue(db),
+  joi: asValue(joi),
 
-    errorFactory: asClass(ApplicationErrorFactoryImpl),
+  errorFactory: asClass(ApplicationErrorFactoryImpl),
 
-    registerInteractor: asClass(RegisterInteractor),
-    registerPresenter: asClass(RegisterPresenterIml),
-    registerValidator: asClass(RegisterValidatorImpl),
-    registerRepository: asClass(RegisterRepositoryImpl),
+  registerInteractor: asClass(RegisterInteractor),
+  registerPresenter: asClass(RegisterPresenterIml),
+  registerValidator: asClass(RegisterValidatorImpl),
+  registerRepository: asClass(RegisterRepositoryImpl),
 });
 
-export const app = { 
-    container,
-}
+export const app = {
+  container,
+};

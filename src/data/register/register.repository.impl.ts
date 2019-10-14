@@ -6,24 +6,24 @@ import { Database } from '../database';
 import { UserModel } from '../database/user.model';
 
 export class RegisterRepositoryImpl implements RegisterRepository {
-    constructor(private db: Database) {}
+  constructor(private db: Database) {}
 
-    async findUserByUsername(username: string): Promise<User| null> {
-        const user = this.db.users.findOne({ username });
+  async findUserByUsername(username: string): Promise<User | null> {
+    const user = this.db.users.findOne({ username });
 
-        if (user) {
-            return user.toEntity();
-        }
-
-        return null;
+    if (user) {
+      return user.toEntity();
     }
 
-    async createUser(user: User): Promise<number> {
-        const result = this.db.users.insert(new UserModel(user));
-        if (result) {
-            return result.$loki;
-        }
+    return null;
+  }
 
-        throw new Error('Database Error');
+  async createUser(user: User): Promise<ID> {
+    const result = this.db.users.insert(new UserModel(user));
+    if (result) {
+      return result.$loki;
     }
+
+    throw new Error('Database Error');
+  }
 }

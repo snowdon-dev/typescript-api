@@ -23,7 +23,6 @@ export class UserModel implements Model {
       lastname: this.lastname,
       email: this.email,
       username: this.username,
-      balance: this.balance,
       password: this.password,
     };
   }
@@ -53,10 +52,6 @@ export class UserModel implements Model {
 
     if (userEntity.username) {
       this.username = userEntity.username;
-    }
-
-    if (userEntity.balance) {
-      this.balance = userEntity.balance;
     }
   }
 }

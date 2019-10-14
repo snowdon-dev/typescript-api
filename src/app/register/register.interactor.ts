@@ -29,7 +29,7 @@ export class RegisterInteractor implements Interactor {
     }
 
     try {
-      const user: User = { ...request, balance: 0 };
+      const user: User = { ...request };
       const id = await this.registerRepository.createUser(user);
       const output: RegisterOutput = {
         user: {

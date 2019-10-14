@@ -8,7 +8,6 @@ export class User implements Entity {
     public email: string,
     public username: string,
     public password: string,
-    public balance = 0,
     public id?: ID,
   ) {}
 }

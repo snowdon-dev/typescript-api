@@ -16,13 +16,14 @@ import './config/passport';
 
 const expressApp: express.Application = express();
 
-expressApp.use(session({
-  secret: 'dale',
-  resave: true,
-  saveUninitialized: true,
-  cookie: { maxAge: 60000 },
-}));
-
+expressApp.use(
+  session({
+    secret: 'dale',
+    resave: true,
+    saveUninitialized: true,
+    cookie: { maxAge: 60000 },
+  }),
+);
 
 expressApp.use(bodyParser.urlencoded({ extended: true }));
 expressApp.use(bodyParser.json());
@@ -44,7 +45,7 @@ expressApp.use((req: express.Request, res, next) => {
 });
 
 expressApp.get('/register', async (req, res) => {
-  res.set('Content-Type', 'text/html')
+  res.set('Content-Type', 'text/html');
   res.send(`
     <h1>Register</h1>
     <form action="/register" method="post">
@@ -72,9 +73,9 @@ expressApp.get('/register', async (req, res) => {
         <input type="submit" value="Register"/>
     </div>
 </form>
-  `)
+  `);
   res.end();
-})
+});
 
 expressApp.post('/register', async (req, res) => {
   const input: RegisterInput = {
@@ -97,15 +98,15 @@ expressApp.post('/register', async (req, res) => {
 });
 
 expressApp.get('/', async (req, res) => {
-  res.set('Content-Type', 'text/html')
+  res.set('Content-Type', 'text/html');
   res.send(`
     <h1>Home</h1>
-  `)
+  `);
   res.end();
 });
 
 expressApp.get('/login', async (req, res) => {
-  res.set('Content-Type', 'text/html')
+  res.set('Content-Type', 'text/html');
   res.send(`
     <h1>Login</h1>
     <form action="/login" method="post">
@@ -121,26 +122,20 @@ expressApp.get('/login', async (req, res) => {
         <input type="submit" value="Log In"/>
     </div>
 </form>
-  `)
+  `);
   res.end();
-})
-
-expressApp.post('/login', 
-  passport.authenticate('local', { failureRedirect: '/login' }),
-  async (req, res) => {
-    res.redirect('/authed');
 });
 
+expressApp.post('/login', passport.authenticate('local', { failureRedirect: '/login' }), async (req, res) => {
+  res.redirect('/authed');
+});
 
-expressApp.get('/authed',
-  ensureLoggedIn(),
-  async (req, res) => {
-    res.set('Content-Type', 'text/html')
-    res.send(`
+expressApp.get('/authed', ensureLoggedIn(), async (req, res) => {
+  res.set('Content-Type', 'text/html');
+  res.send(`
       <h1>Authed route</h1>
     `);
-  }
-);
+});
 
 expressApp.listen(3000, () => {
   console.log('Express listening on 3000');

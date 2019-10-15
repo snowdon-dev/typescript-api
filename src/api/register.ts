@@ -28,7 +28,7 @@ container.register({
 
   findUserInteractor: asClass(FindUserInteractor),
   findUserRepository: asClass(FindUserRepositoryImpl),
-  findUserValidator: asClass(FindUserValidatorImpl)
+  findUserValidator: asClass(FindUserValidatorImpl),
 });
 
 export const app = {

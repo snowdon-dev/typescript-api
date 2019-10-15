@@ -8,32 +8,34 @@ import { ApplicationErrorFactory } from '../core/definitions/application-error-f
 import { ErrorType } from '../core/definitions/error-type';
 
 export class FindUserInteractor implements Interactor {
-    constructor(
-        private findUserValidator: FindUserValidator,
-        private findUserRepository: FindUserRepository,
-        private errorFactory: ApplicationErrorFactory,
-    ) {}
+  constructor(
+    private findUserValidator: FindUserValidator,
+    private findUserRepository: FindUserRepository,
+    private errorFactory: ApplicationErrorFactory,
+  ) {}
 
-    async execute(request: FindUserInput): Promise<FindUserOutput> {
-        const result = this.findUserValidator.validate(request);
+  async execute(request: FindUserInput): Promise<FindUserOutput> {
+    const result = this.findUserValidator.validate(request);
 
-        if (!result.valid) {
-            throw this.errorFactory.getError(ErrorType.validation, result.error);
-        }
-
-        const userResult = await this.findUserRepository.findUserByEmail(request.email);
-        
-        if (userResult) {
-            return { user: {
-                id: userResult.id,
-                firstname: userResult.firstname,
-                lastname: userResult.email,
-                email: userResult.email,
-                username: userResult.email,
-                password: userResult.password,
-            },};
-        } else {
-            return null;
-        }
+    if (!result.valid) {
+      throw this.errorFactory.getError(ErrorType.validation, result.error);
     }
+
+    const userResult = await this.findUserRepository.findUserByEmail(request.email);
+
+    if (userResult) {
+      return {
+        user: {
+          id: userResult.id,
+          firstname: userResult.firstname,
+          lastname: userResult.email,
+          email: userResult.email,
+          username: userResult.email,
+          password: userResult.password,
+        },
+      };
+    } else {
+      return null;
+    }
+  }
 }

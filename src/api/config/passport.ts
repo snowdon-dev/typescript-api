@@ -6,14 +6,14 @@ import { FindUserOutput } from '../../app/find-user/find-user.out';
 import { FindUserInput } from '../../app/find-user/find-user.in';
 
 passport.serializeUser(function(user: any, done: (arg0: any, arg1: any) => void) {
-    done(null, user);
-  });
-  
-  passport.deserializeUser(function(obj: any, done: (arg0: any, arg1: any) => void) {
-    done(null, obj);
-  });
-  passport.use(new LocalStrategy(async (username, password, done) => {
-    
+  done(null, user);
+});
+
+passport.deserializeUser(function(obj: any, done: (arg0: any, arg1: any) => void) {
+  done(null, obj);
+});
+passport.use(
+  new LocalStrategy(async (username, password, done) => {
     const findUser: FindUserInteractor = app.container.resolve<FindUserInteractor>('findUserInteractor');
     const input: FindUserInput = {
       email: username,
@@ -33,6 +33,6 @@ passport.serializeUser(function(user: any, done: (arg0: any, arg1: any) => void)
         id: response.user.id,
       });
     }
-    return done(null, false, { message: 'Incorrect password.' })
-  }));
-  
+    return done(null, false, { message: 'Incorrect password.' });
+  }),
+);

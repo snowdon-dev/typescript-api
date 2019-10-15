@@ -5,6 +5,8 @@ import { FindUserInteractor } from '../../app/find-user/find-user.interactor';
 import { FindUserOutput } from '../../app/find-user/find-user.out';
 import { FindUserInput } from '../../app/find-user/find-user.in';
 
+import bcrypt from 'bcryptjs';
+
 passport.serializeUser(function(user: any, done: (arg0: any, arg1: any) => void) {
   done(null, user);
 });
@@ -19,12 +21,14 @@ passport.use(
       email: username,
     };
     const response: FindUserOutput = await findUser.execute(input);
-    console.log(response);
     if (!response) {
       return done('Incorrect username');
     }
-    if (response.user.password === password) {
-      console.log('login success: ' + password);
+    
+
+    const passCmp = bcrypt.compareSync(password, response.user.password);
+
+    if (passCmp) {
       return done(null, {
         firstname: response.user.firstname,
         lastname: response.user.lastname,

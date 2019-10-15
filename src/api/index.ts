@@ -101,6 +101,11 @@ expressApp.get('/', async (req, res) => {
   res.set('Content-Type', 'text/html');
   res.send(`
     <h1>Home</h1>
+    <ul>
+      <li><a href="/login">Login</a></li>
+      <li><a href="/register">Register</a></li>
+      <li><a href="/authed">Authenticated Route</a></li>
+    </ul>
   `);
   res.end();
 });
@@ -111,7 +116,7 @@ expressApp.get('/login', async (req, res) => {
     <h1>Login</h1>
     <form action="/login" method="post">
     <div>
-        <label>email:</label>
+        <label>Email Address:</label>
         <input type="text" name="username"/>
     </div>
     <div>

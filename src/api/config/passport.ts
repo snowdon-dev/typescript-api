@@ -24,7 +24,6 @@ passport.use(
     if (!response) {
       return done('Incorrect username');
     }
-    
 
     const passCmp = bcrypt.compareSync(password, response.user.password);
 

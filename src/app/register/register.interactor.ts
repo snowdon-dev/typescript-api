@@ -31,14 +31,13 @@ export class RegisterInteractor implements Interactor {
     }
 
     let passwordHash: string;
-    let salt: string
+    let salt: string;
     try {
       salt = bcrypt.genSaltSync(3);
       passwordHash = bcrypt.hashSync(request.password, salt);
     } catch (e) {
       throw this.errorFactory.getError(ErrorType.userCreate, { username: request.username, message: 'Server error' });
     }
-    
 
     try {
       const user: User = { ...request };

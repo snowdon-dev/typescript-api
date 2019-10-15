@@ -2,7 +2,6 @@ import express from 'express';
 import bodyParser from 'body-parser';
 
 import passport from 'passport';
-import { Strategy as LocalStrategy } from 'passport-local';
 
 import { app } from './register';
 import { RegisterInput } from '../app/register/register.in';
@@ -11,34 +10,9 @@ import { RegisterInteractor } from '../app/register/register.interactor';
 
 import { ensureLoggedIn } from 'connect-ensure-login';
 
-
 import session from 'express-session';
 
-
-passport.serializeUser(function(user: any, done: (arg0: any, arg1: any) => void) {
-  done(null, user);
-});
-
-passport.deserializeUser(function(obj: any, done: (arg0: any, arg1: any) => void) {
-  done(null, obj);
-});
-passport.use(new LocalStrategy((username, password, done) => {
-  console.log('passport use local strategy');
-  if (username !== 'dksnowdon@gmail.com') {
-    return done('Incorrect username');
-  }
-  if (password === '1234') {
-    return done(null, {
-      firstname: 'Dale',
-      lastname: 'Snowdon',
-      email: 'dksnowdon@gmail.com',
-      username: 'dksnowdon',
-      id: 1
-    })
-  }
-  return done(null, false, { message: 'Incorrect password.' })
-}));
-
+import './config/passport';
 
 const expressApp: express.Application = express();
 
@@ -69,7 +43,40 @@ expressApp.use((req: express.Request, res, next) => {
   next(null);
 });
 
-expressApp.post('/user', async (req, res) => {
+expressApp.get('/register', async (req, res) => {
+  res.set('Content-Type', 'text/html')
+  res.send(`
+    <h1>Register</h1>
+    <form action="/register" method="post">
+    <div>
+        <label>Username:</label>
+        <input type="text" name="username"/>
+    </div>
+    <div>
+        <label>Email:</label>
+        <input type="email" name="email"/>
+    </div>
+    <div>
+        <label>First Name:</label>
+        <input type="text" name="firstname"/>
+    </div>
+    <div>
+        <label>Last Name:</label>
+        <input type="text" name="lastname"/>
+    </div>
+    <div>
+        <label>Password:</label>
+        <input type="password" name="password"/>
+    </div>
+    <div>
+        <input type="submit" value="Register"/>
+    </div>
+</form>
+  `)
+  res.end();
+})
+
+expressApp.post('/register', async (req, res) => {
   const input: RegisterInput = {
     firstname: req.body.firstname,
     lastname: req.body.lastname,
@@ -99,7 +106,7 @@ expressApp.get('/login', async (req, res) => {
     <h1>Login</h1>
     <form action="/login" method="post">
     <div>
-        <label>Username:</label>
+        <label>email:</label>
         <input type="text" name="username"/>
     </div>
     <div>
@@ -119,6 +126,7 @@ expressApp.post('/login',
   async (req, res) => {
     res.redirect('/');
 });
+
 
 expressApp.get('/authed',
   ensureLoggedIn(),

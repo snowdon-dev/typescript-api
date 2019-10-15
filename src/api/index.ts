@@ -86,7 +86,11 @@ expressApp.post('/register', async (req, res) => {
   };
   try {
     const output: RegisterPresenterOutput = await register(input);
-    res.json(output);
+    if (output) {
+      res.redirect('/authed');
+    } else {
+      res.redirect('/register');
+    }
   } catch (e) {
     res.end(e.toString());
   }
@@ -124,7 +128,7 @@ expressApp.get('/login', async (req, res) => {
 expressApp.post('/login', 
   passport.authenticate('local', { failureRedirect: '/login' }),
   async (req, res) => {
-    res.redirect('/');
+    res.redirect('/authed');
 });
 
 

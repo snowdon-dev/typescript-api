@@ -8,7 +8,7 @@ export const getIndex = (req: Request, res: Response) => {
       <ul>
         <li><a href="/login">Login</a></li>
         <li><a href="/register">Register</a></li>
-        <li><a href="/authed">Authenticated Route</a></li>
+        <li><a href="/web">Authenticated Route</a></li>
       </ul>
     `);
     res.end();

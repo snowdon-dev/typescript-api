@@ -32,8 +32,7 @@ export const getLogin = (req: Request, res: Response) => {
 }
 
 export const handleLogin = (req: Request, res: Response) => {
-   console.log(req.isAuthenticated());
-   res.redirect('/auth');
+   res.redirect('/web');
 }
 
 const register = async (input: RegisterInput): Promise<RegisterPresenterOutput> => {

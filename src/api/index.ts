@@ -4,9 +4,11 @@ import bodyParser from 'body-parser';
 import session from 'express-session';
 
 import passport from 'passport';
-import { ensureLoggedIn } from 'connect-ensure-login';
+
 import * as loginController from './controllers/login';
 import * as homeController from './controllers/home';
+
+import { web as webRouter } from './web';
 
 const expressApp: express.Application = express();
 
@@ -33,12 +35,7 @@ expressApp.post('/login', passport.authenticate('local'), loginController.handle
 
 expressApp.get('/', homeController.getIndex);
 
-expressApp.get('/auth', ensureLoggedIn(), async (req, res) => {
-  res.set('Content-Type', 'text/html');
-  res.send(`
-      <h1>Authed route</h1>
-    `);
-});
+expressApp.use('/web', webRouter);
 
 expressApp.listen(3000, () => {
   console.log('Express listening on 3000');

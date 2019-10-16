@@ -5,6 +5,10 @@ import { RegisterInput } from '../../app/register/register.in';
 import { RegisterPresenter, RegisterPresenterOutput } from '../presenter/register/register.presenter';
 import { RegisterInteractor } from '../../app/register/register.interactor';
 
+import passport from 'passport';
+import '../config/passport';
+import { IVerifyOptions } from 'passport-local';
+import { NextFunction } from 'connect';
 
 export const getLogin = (req: Request, res: Response) => {
     res.set('Content-Type', 'text/html');
@@ -28,7 +32,8 @@ export const getLogin = (req: Request, res: Response) => {
 }
 
 export const handleLogin = (req: Request, res: Response) => {
-    res.redirect('/authed');
+   console.log(req.isAuthenticated());
+   res.redirect('/auth');
 }
 
 const register = async (input: RegisterInput): Promise<RegisterPresenterOutput> => {
@@ -83,7 +88,7 @@ export const postRegister = async (req: Request, res: Response): Promise<void> =
       try {
         const output: RegisterPresenterOutput = await register(input);
         if (output) {
-          res.redirect('/authed');
+          res.redirect('/login');
         } else {
           res.redirect('/register');
         }

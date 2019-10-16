@@ -5,7 +5,6 @@ import session from 'express-session';
 
 import passport from 'passport';
 import { ensureLoggedIn } from 'connect-ensure-login';
-
 import * as loginController from './controllers/login';
 import * as homeController from './controllers/home';
 
@@ -30,11 +29,11 @@ expressApp.use(passport.session());
 expressApp.get('/register', loginController.getRegister);
 expressApp.post('/register', loginController.postRegister);
 expressApp.get('/login', loginController.getLogin);
-expressApp.post('/login', passport.authenticate('local', { failureRedirect: '/login' }), loginController.handleLogin);
+expressApp.post('/login', passport.authenticate('local'), loginController.handleLogin);
 
 expressApp.get('/', homeController.getIndex);
 
-expressApp.get('/authed', ensureLoggedIn(), async (req, res) => {
+expressApp.get('/auth', ensureLoggedIn(), async (req, res) => {
   res.set('Content-Type', 'text/html');
   res.send(`
       <h1>Authed route</h1>

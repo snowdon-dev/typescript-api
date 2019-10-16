@@ -24,7 +24,6 @@ passport.use(
     if (!response) {
       return done('Incorrect username');
     }
-
     const passCmp = bcrypt.compareSync(password, response.user.password);
 
     if (passCmp) {
@@ -35,7 +34,7 @@ passport.use(
         username: response.user.username,
         id: response.user.id,
       });
-    }
+    } 
     return done(null, false, { message: 'Incorrect password.' });
   }),
 );

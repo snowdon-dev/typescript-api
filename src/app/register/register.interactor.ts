@@ -8,6 +8,8 @@ import { RegisterRepository } from './register.repository';
 import { RegisterValidator } from './register.validator';
 import { ErrorType } from '../core/definitions/error-type';
 
+import bcrypt from 'bcryptjs';
+
 export class RegisterInteractor implements Interactor {
   constructor(
     private registerValidator: RegisterValidator,
@@ -28,8 +30,18 @@ export class RegisterInteractor implements Interactor {
       throw this.errorFactory.getError(ErrorType.userExists, { username: request.username });
     }
 
+    let passwordHash: string;
+    let salt: string;
+    try {
+      salt = bcrypt.genSaltSync(3);
+      passwordHash = bcrypt.hashSync(request.password, salt);
+    } catch (e) {
+      throw this.errorFactory.getError(ErrorType.userCreate, { username: request.username, message: 'Server error' });
+    }
+
     try {
       const user: User = { ...request };
+      user.password = passwordHash;
       const id = await this.registerRepository.createUser(user);
       const output: RegisterOutput = {
         user: {

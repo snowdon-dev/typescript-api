@@ -5,12 +5,9 @@ import { RegisterInput } from '../../app/register/register.in';
 import { RegisterPresenter, RegisterPresenterOutput } from '../presenter/register/register.presenter';
 import { RegisterInteractor } from '../../app/register/register.interactor';
 
-import passport from 'passport';
 import '../config/passport';
-import { IVerifyOptions } from 'passport-local';
-import { NextFunction } from 'connect';
 
-export const getLogin = (req: Request, res: Response) => {
+export const getLogin = (req: Request, res: Response): void => {
   res.set('Content-Type', 'text/html');
   res.send(`
       <h1>Login</h1>
@@ -31,7 +28,7 @@ export const getLogin = (req: Request, res: Response) => {
   res.end();
 };
 
-export const handleLogin = (req: Request, res: Response) => {
+export const handleLogin = (req: Request, res: Response): void => {
   res.redirect('/web');
 };
 

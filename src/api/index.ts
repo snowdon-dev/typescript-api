@@ -3,16 +3,16 @@ import bodyParser from 'body-parser';
 
 import passport from 'passport';
 
-import { app } from './register';
 import { RegisterInput } from '../app/register/register.in';
-import { RegisterPresenter, RegisterPresenterOutput } from './presenter/register/register.presenter';
-import { RegisterInteractor } from '../app/register/register.interactor';
+import { RegisterPresenterOutput } from './presenter/register/register.presenter';
 
 import { ensureLoggedIn } from 'connect-ensure-login';
 
 import session from 'express-session';
 
 import './config/passport';
+
+import * as loginController from './controllers/login';
 
 const expressApp: express.Application = express();
 
@@ -31,71 +31,9 @@ expressApp.use(bodyParser.json());
 expressApp.use(passport.initialize());
 expressApp.use(passport.session());
 
-const register = async (input: RegisterInput): Promise<RegisterPresenterOutput> => {
-  const presenter: RegisterPresenter = app.container.resolve<RegisterPresenter>('registerPresenter');
-  const interator: RegisterInteractor = app.container.resolve<RegisterInteractor>('registerInteractor');
-  const response = await interator.execute(input); // @todo don't rely on interator implementation
-  const output = await presenter.present(response);
-  return output;
-};
 
-expressApp.use((req: express.Request, res, next) => {
-  console.log(req.method + ' : ' + req.originalUrl);
-  next(null);
-});
-
-expressApp.get('/register', async (req, res) => {
-  res.set('Content-Type', 'text/html');
-  res.send(`
-    <h1>Register</h1>
-    <form action="/register" method="post">
-    <div>
-        <label>Username:</label>
-        <input type="text" name="username"/>
-    </div>
-    <div>
-        <label>Email:</label>
-        <input type="email" name="email"/>
-    </div>
-    <div>
-        <label>First Name:</label>
-        <input type="text" name="firstname"/>
-    </div>
-    <div>
-        <label>Last Name:</label>
-        <input type="text" name="lastname"/>
-    </div>
-    <div>
-        <label>Password:</label>
-        <input type="password" name="password"/>
-    </div>
-    <div>
-        <input type="submit" value="Register"/>
-    </div>
-</form>
-  `);
-  res.end();
-});
-
-expressApp.post('/register', async (req, res) => {
-  const input: RegisterInput = {
-    firstname: req.body.firstname,
-    lastname: req.body.lastname,
-    email: req.body.email,
-    username: req.body.username,
-    password: req.body.password,
-  };
-  try {
-    const output: RegisterPresenterOutput = await register(input);
-    if (output) {
-      res.redirect('/authed');
-    } else {
-      res.redirect('/register');
-    }
-  } catch (e) {
-    res.end(e.toString());
-  }
-});
+expressApp.get('/register', loginController.getRegister);
+expressApp.post('/register', loginController.postRegister);
 
 expressApp.get('/', async (req, res) => {
   res.set('Content-Type', 'text/html');
@@ -110,26 +48,7 @@ expressApp.get('/', async (req, res) => {
   res.end();
 });
 
-expressApp.get('/login', async (req, res) => {
-  res.set('Content-Type', 'text/html');
-  res.send(`
-    <h1>Login</h1>
-    <form action="/login" method="post">
-    <div>
-        <label>Email Address:</label>
-        <input type="text" name="username"/>
-    </div>
-    <div>
-        <label>Password:</label>
-        <input type="password" name="password"/>
-    </div>
-    <div>
-        <input type="submit" value="Log In"/>
-    </div>
-</form>
-  `);
-  res.end();
-});
+expressApp.get('/login', loginController.getLogin);
 
 expressApp.post('/login', passport.authenticate('local', { failureRedirect: '/login' }), async (req, res) => {
   res.redirect('/authed');

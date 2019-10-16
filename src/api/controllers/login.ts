@@ -11,8 +11,8 @@ import { IVerifyOptions } from 'passport-local';
 import { NextFunction } from 'connect';
 
 export const getLogin = (req: Request, res: Response) => {
-    res.set('Content-Type', 'text/html');
-    res.send(`
+  res.set('Content-Type', 'text/html');
+  res.send(`
       <h1>Login</h1>
       <form action="/login" method="post">
       <div>
@@ -28,12 +28,12 @@ export const getLogin = (req: Request, res: Response) => {
       </div>
   </form>
     `);
-    res.end();
-}
+  res.end();
+};
 
 export const handleLogin = (req: Request, res: Response) => {
-   res.redirect('/web');
-}
+  res.redirect('/web');
+};
 
 const register = async (input: RegisterInput): Promise<RegisterPresenterOutput> => {
   const presenter: RegisterPresenter = app.container.resolve<RegisterPresenter>('registerPresenter');
@@ -77,21 +77,21 @@ export const getRegister = async (req: Request, res: Response): Promise<void> =>
 };
 
 export const postRegister = async (req: Request, res: Response): Promise<void> => {
-    const input: RegisterInput = {
-        firstname: req.body.firstname,
-        lastname: req.body.lastname,
-        email: req.body.email,
-        username: req.body.username,
-        password: req.body.password,
-      };
-      try {
-        const output: RegisterPresenterOutput = await register(input);
-        if (output) {
-          res.redirect('/login');
-        } else {
-          res.redirect('/register');
-        }
-      } catch (e) {
-        res.end(e.toString());
-      }
+  const input: RegisterInput = {
+    firstname: req.body.firstname,
+    lastname: req.body.lastname,
+    email: req.body.email,
+    username: req.body.username,
+    password: req.body.password,
+  };
+  try {
+    const output: RegisterPresenterOutput = await register(input);
+    if (output) {
+      res.redirect('/login');
+    } else {
+      res.redirect('/register');
+    }
+  } catch (e) {
+    res.end(e.toString());
+  }
 };

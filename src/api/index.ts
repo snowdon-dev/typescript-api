@@ -27,7 +27,6 @@ expressApp.use(bodyParser.json());
 expressApp.use(passport.initialize());
 expressApp.use(passport.session());
 
-
 expressApp.get('/register', loginController.getRegister);
 expressApp.post('/register', loginController.postRegister);
 expressApp.get('/login', loginController.getLogin);

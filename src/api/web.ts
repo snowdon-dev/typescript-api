@@ -8,8 +8,6 @@ const app = Router();
 
 app.use(ensureLoggedIn());
 
-
 app.get('/', webController.getIndex);
-
 
 export const web = app;

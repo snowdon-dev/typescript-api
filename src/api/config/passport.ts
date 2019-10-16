@@ -34,7 +34,7 @@ passport.use(
         username: response.user.username,
         id: response.user.id,
       });
-    } 
+    }
     return done(null, false, { message: 'Incorrect password.' });
   }),
 );

@@ -9,6 +9,7 @@ import * as loginController from './controllers/login';
 import * as homeController from './controllers/home';
 
 import { web as webRouter } from './web';
+import { api as apiRouter } from './api';
 
 const expressApp: express.Application = express();
 
@@ -35,6 +36,7 @@ expressApp.post('/login', passport.authenticate('local'), loginController.handle
 expressApp.get('/', homeController.getIndex);
 
 expressApp.use('/web', webRouter);
+expressApp.use('/api', apiRouter);
 
 expressApp.listen(3000, () => {
   console.log('Express listening on 3000');

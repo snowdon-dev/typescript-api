@@ -6,7 +6,6 @@ import { RegisterPresenter, RegisterPresenterOutput } from '../presenter/registe
 import { RegisterInteractor } from '../../app/register/register.interactor';
 
 
-
 export const getLogin = (req: Request, res: Response) => {
     res.set('Content-Type', 'text/html');
     res.send(`
@@ -26,6 +25,10 @@ export const getLogin = (req: Request, res: Response) => {
   </form>
     `);
     res.end();
+}
+
+export const handleLogin = (req: Request, res: Response) => {
+    res.redirect('/authed');
 }
 
 const register = async (input: RegisterInput): Promise<RegisterPresenterOutput> => {

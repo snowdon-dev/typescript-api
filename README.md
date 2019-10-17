@@ -5,7 +5,7 @@ Development is happening on branch `develop/ds/staging`
 ## Development
 - Add GUI link submission panel
 - Add redirect handler
-- Docker dev environment rejig
+- Docker dev environment rejig - reload (nodemon etc setup)
 - E2e testing
 - Layer testing
 

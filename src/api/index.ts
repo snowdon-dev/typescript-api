@@ -1,6 +1,6 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-
+import { Request, Response } from 'express';
 import session from 'express-session';
 
 import passport from 'passport';
@@ -37,6 +37,14 @@ expressApp.get('/', homeController.getIndex);
 
 expressApp.use('/web', webRouter);
 expressApp.use('/api', apiRouter);
+
+
+/**
+ * Takes links and redirects via the link entry
+ */
+expressApp.get('/[a-zA-Z0-9]{4}/', (req: Request, res: Response) => {
+  res.json({test: "Testing"});
+});
 
 expressApp.listen(3000, () => {
   console.log('Express listening on 3000');

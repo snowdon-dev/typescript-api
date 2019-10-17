@@ -32,16 +32,14 @@ export class ShortenInteractor implements Interactor {
     // create a unique identifer
     let uniqueResult = false;
     let uid;
-    while(!uniqueResult) {
+    while (!uniqueResult) {
       uid = uidGen(uidLength); // 4 ^ 62 avaliable combinations
 
       // generated uids may not be unique, lets check
       uniqueResult = await this.shortenRepository.ensureUniqueGUID(uid);
     }
-    
-    const baseName = process.env.NODE_ENV !== 'production' 
-      ? 'localhost:3000/'
-      : false; // @todo implement production using injection for use with configs
+
+    const baseName = process.env.NODE_ENV !== 'production' ? 'localhost:3000/' : false; // @todo implement production using injection for use with configs
 
     const entry = new LinkEntry(
       Number(request.awinaffid),
@@ -50,7 +48,7 @@ export class ShortenInteractor implements Interactor {
       uid,
 
       // unix time has compatibility with any database implementation
-      String((new Date()).getTime()),
+      String(new Date().getTime()),
 
       request.platform,
     );

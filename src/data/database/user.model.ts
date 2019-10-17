@@ -28,7 +28,9 @@ export class UserModel implements Model {
   }
 
   private fromEntity(userEntity?: Partial<User>): void {
-    if (!userEntity) return;
+    if (!userEntity) {
+      return;
+    }
 
     if (userEntity.id) {
       this.$loki = userEntity.id;

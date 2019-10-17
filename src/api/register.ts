@@ -13,6 +13,9 @@ import { RegisterRepositoryImpl } from '../data/register/register.repository.imp
 import { FindUserInteractor } from '../app/find-user/find-user.interactor';
 import { FindUserValidatorImpl } from '../data/find-user/find-user.validator.impl';
 import { FindUserRepositoryImpl } from '../data/find-user/find-user.repository.impl';
+import { ShortenInteractor } from '../app/shorten/shorten.interactor';
+import { ShortenValidatorImpl } from '../data/shorten/shorten.validator.impl';
+import { ShortenRepositoryImpl } from '../data/shorten/shorten.repository.impl';
 
 const container = createContainer({ injectionMode: InjectionMode.CLASSIC });
 container.register({
@@ -29,6 +32,10 @@ container.register({
   findUserInteractor: asClass(FindUserInteractor),
   findUserRepository: asClass(FindUserRepositoryImpl),
   findUserValidator: asClass(FindUserValidatorImpl),
+
+  shortenInteractor: asClass(ShortenInteractor),
+  shortenValidator: asClass(ShortenValidatorImpl),
+  shortenRepository: asClass(ShortenRepositoryImpl),
 });
 
 export const app = {

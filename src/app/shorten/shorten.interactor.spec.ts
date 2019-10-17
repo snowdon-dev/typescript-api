@@ -1,8 +1,6 @@
 import { ShortenInteractor } from './shorten.interactor';
 import { TestEnvironment } from '../../test-environment';
-import { ValidatorResult } from '../core/definitions/validator-result';
 import { ShortenInput } from './shorten.in';
-import { ShortenOutput } from './shorten.out';
 
 const request: ShortenInput = {
   awinaffid: '556',
@@ -12,10 +10,9 @@ const request: ShortenInput = {
 
 describe('Shorten interactor', () => {
   let interactor: ShortenInteractor;
-  let shortenRepository: any;
+  let shortenRepository;
   let shortenValidator;
   let errorFactory;
-
 
   describe('execute validation fails', () => {
     beforeEach(() => {
@@ -34,7 +31,7 @@ describe('Shorten interactor', () => {
       errorFactory = {
         getError: jest.fn(() => new Error('shorten')),
       };
-  
+
       interactor = TestEnvironment.createInstance(ShortenInteractor, [
         {
           name: 'shortenRepository',
@@ -47,8 +44,8 @@ describe('Shorten interactor', () => {
         {
           name: 'errorFactory',
           useValue: errorFactory,
-        }
-      ]);
+        },
+      ]) as ShortenInteractor;
     });
 
     it('fails', async () => {
@@ -58,14 +55,15 @@ describe('Shorten interactor', () => {
       } catch (e) {
         expect(e.message).toBe('shorten');
       }
-    })
+    });
   });
 
   describe('will handle generation of duplicate GUID', () => {
     beforeEach(() => {
       shortenRepository = {
         storeShortLink: jest.fn(async () => 1),
-        ensureUniqueGUID: jest.fn()
+        ensureUniqueGUID: jest
+          .fn()
           .mockImplementationOnce(async () => false)
           .mockImplementationOnce(async () => false)
           .mockImplementationOnce(async () => true),
@@ -81,7 +79,7 @@ describe('Shorten interactor', () => {
       errorFactory = {
         getError: jest.fn(() => new Error('shorten')),
       };
-  
+
       interactor = TestEnvironment.createInstance(ShortenInteractor, [
         {
           name: 'shortenRepository',
@@ -94,10 +92,10 @@ describe('Shorten interactor', () => {
         {
           name: 'errorFactory',
           useValue: errorFactory,
-        }
+        },
       ]);
     });
-    
+
     it('works', async () => {
       const response = await interactor.execute(request);
       expect(shortenRepository.ensureUniqueGUID).toHaveBeenCalledTimes(3);
@@ -122,7 +120,7 @@ describe('Shorten interactor', () => {
       errorFactory = {
         getError: jest.fn(() => new Error('shorten')),
       };
-  
+
       interactor = TestEnvironment.createInstance(ShortenInteractor, [
         {
           name: 'shortenRepository',
@@ -135,7 +133,7 @@ describe('Shorten interactor', () => {
         {
           name: 'errorFactory',
           useValue: errorFactory,
-        }
+        },
       ]);
     });
 
@@ -143,7 +141,7 @@ describe('Shorten interactor', () => {
       const response = await interactor.execute(request);
       const parts = response.url.split('/');
       expect(parts[0]).toBe('localhost:3000');
-      expect(parts[1]).toMatch(/[a-zA-Z0-9]{4}/);
+      expect(parts[1]).toMatch(/^[a-zA-Z0-9]{4}$/);
     });
-  })
+  });
 });

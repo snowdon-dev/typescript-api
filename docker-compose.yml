@@ -11,12 +11,3 @@ services:
       - PORT=3000
     command:
       sh -c 'node build/api/index.js'
-    links:
-      - redis
-    environment:
-      - REDIS_URL=redis://session
-  redis:
-    image: redis
-    container_name: session
-    expose:
-      - 6379

@@ -17,7 +17,7 @@ export class ShortenRepositoryImpl implements ShortenRepository {
 
   async ensureUniqueGUID(guid: string): Promise<boolean> {
     const entry = this.db.links.findOne({ guid });
-    if (!entry || entry.$loki) {
+    if (!entry || !entry.$loki) {
       return true;
     } else {
       return false;

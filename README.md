@@ -45,7 +45,7 @@ $ curl "localhost:3000/api/shorten?awinaffid=202937&awinmid=2832&platform=dl&p=%
 
 Once you have the short url, any GET requests will redirect to then endpoint (p) from the inital `LinkEntry`. 
 
-> Note the cookie header is only present because i've logged into the GUI part of the app. 
+> Note the cookie header is only present for now, it will be removed. 
 
 ```
 $ curl -i localhost:3000/MBEj;

@@ -5,7 +5,6 @@ Development is happening on branch `develop/ds/staging`
 ## Development
 - Add GUI link submission panel
 - Use PUT or POST request type for inputing inital URL
-- Add hit tracking
 - Docker dev environment rejig - reload (nodemon etc setup)
 - E2e testing
 - Layer testing

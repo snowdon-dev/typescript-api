@@ -4,6 +4,7 @@ Development is happening on branch `develop/ds/staging`
 
 ## Development
 - Add GUI link submission panel
+- Remove session middleware from api and short link route handler
 - Use PUT or POST request type for inputing inital URL
 - Docker dev environment rejig - reload (nodemon etc setup)
 - E2e testing

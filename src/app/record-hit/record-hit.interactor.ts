@@ -21,7 +21,7 @@ export class RecordHitInteractor implements Interactor {
       throw this.errorFactory.getError(ErrorType.validation, result.error);
     }
 
-    const store = this.recordHitRepository.recordHit(request.uid);
+    const store = await this.recordHitRepository.recordHit(request.uid);
 
     return {
       error: !store,

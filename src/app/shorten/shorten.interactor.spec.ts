@@ -13,6 +13,7 @@ describe('Shorten interactor', () => {
   let shortenRepository;
   let shortenValidator;
   let errorFactory;
+  let repositoryMock: jest.Mock;
 
   describe('execute validation fails', () => {
     beforeEach(() => {
@@ -62,7 +63,7 @@ describe('Shorten interactor', () => {
     beforeEach(() => {
       shortenRepository = {
         storeShortLink: jest.fn(async () => 1),
-        ensureUniqueGUID: jest
+        ensureUniqueGUID: repositoryMock = jest
           .fn()
           .mockImplementationOnce(async () => false)
           .mockImplementationOnce(async () => false)
@@ -93,12 +94,12 @@ describe('Shorten interactor', () => {
           name: 'errorFactory',
           useValue: errorFactory,
         },
-      ]);
+      ]) as ShortenInteractor;
     });
 
     it('works', async () => {
       const response = await interactor.execute(request);
-      expect(shortenRepository.ensureUniqueGUID).toHaveBeenCalledTimes(3);
+      expect(repositoryMock).toHaveBeenCalledTimes(3);
       expect(typeof response.url).toBe('string');
     });
   });
@@ -134,7 +135,7 @@ describe('Shorten interactor', () => {
           name: 'errorFactory',
           useValue: errorFactory,
         },
-      ]);
+      ]) as ShortenInteractor;
     });
 
     it('works', async () => {

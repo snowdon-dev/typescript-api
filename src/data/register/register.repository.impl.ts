@@ -20,6 +20,7 @@ export class RegisterRepositoryImpl implements RegisterRepository {
 
   async createUser(user: User): Promise<ID> {
     const result = this.db.users.insert(new UserModel(user));
+
     if (result) {
       return result.$loki;
     }

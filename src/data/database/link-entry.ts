@@ -8,7 +8,7 @@ export class LinkEntryModel implements Model {
   awinmid: number;
   endpoint: string;
   guid: string;
-  unixTime: string;
+  unixTime: number;
   platform?: string;
 
   constructor(linkEntry?: Partial<LinkEntry>) {

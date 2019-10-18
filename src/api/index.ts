@@ -11,6 +11,11 @@ import * as homeController from './controllers/home';
 import { web as webRouter } from './web';
 import { api as apiRouter } from './api';
 
+import { app } from './register';
+import { FindLinkInteractor } from '../app/find-link/find-link.interactor';
+import { FindLinkInput } from '../app/find-link/find-link.in';
+import { RecordHitInteractor } from '../app/record-hit/record-hit.interactor';
+
 const expressApp: express.Application = express();
 
 expressApp.use(
@@ -41,9 +46,28 @@ expressApp.use('/api', apiRouter);
 /**
  * Takes links and redirects via the link entry
  */
-expressApp.get('/[a-zA-Z0-9]{4}/', (req: Request, res: Response) => {
-  res.json({ test: 'Testing' });
-});
+expressApp.get(
+  '/:uid([a-zA-Z0-9]{4})',
+  async (req: Request, res: Response): Promise<void> => {
+    const input: FindLinkInput = {
+      uid: req.params.uid,
+    };
+    const getLink = app.container.resolve<FindLinkInteractor>('findLinkInteractor');
+    const getLinkRes = await getLink.execute(input);
+    const recordHit = app.container.resolve<RecordHitInteractor>('recordHitInteractor');
+    const result = recordHit.execute({ uid: req.params.uid });
+    if (!result) {
+      res.json({ error: 'Service unavaliable' });
+      return;
+    }
+    if (getLinkRes.error) {
+      res.json(getLinkRes);
+      return;
+    }
+    res.redirect(getLinkRes.url);
+    return;
+  },
+);
 
 expressApp.listen(3000, () => {
   console.log('Express listening on 3000');

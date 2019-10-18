@@ -48,9 +48,7 @@ export class ShortenInteractor implements Interactor {
       uid,
 
       // unix time has compatibility with any database implementation
-      // @todo reducers on strings may be fine in NOSQL, use integer for filters
-      // any within SQL implementations.
-      String(new Date().getTime()),
+      new Date().getTime(),
 
       request.platform,
     );

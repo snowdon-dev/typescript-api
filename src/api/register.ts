@@ -16,6 +16,12 @@ import { FindUserRepositoryImpl } from '../data/find-user/find-user.repository.i
 import { ShortenInteractor } from '../app/shorten/shorten.interactor';
 import { ShortenValidatorImpl } from '../data/shorten/shorten.validator.impl';
 import { ShortenRepositoryImpl } from '../data/shorten/shorten.repository.impl';
+import { FindLinkInteractor } from '../app/find-link/find-link.interactor';
+import { FindLinkRepositoryImpl } from '../data/find-link/find-link.repository.impl';
+import { FindLinkValidatorImpl } from '../data/find-link/find-link.validator.impl';
+import { RecordHitInteractor } from '../app/record-hit/record-hit.interactor';
+import { RecordHitRepositoryImpl } from '../data/record-hit/record-hit.repository.impl';
+import { RecordHitValidatorImpl } from '../data/record-hit/record-hit.validator.impl';
 
 const container = createContainer({ injectionMode: InjectionMode.CLASSIC });
 container.register({
@@ -36,6 +42,14 @@ container.register({
   shortenInteractor: asClass(ShortenInteractor),
   shortenValidator: asClass(ShortenValidatorImpl),
   shortenRepository: asClass(ShortenRepositoryImpl),
+
+  findLinkInteractor: asClass(FindLinkInteractor),
+  findLinkRepository: asClass(FindLinkRepositoryImpl),
+  findLinkValidator: asClass(FindLinkValidatorImpl),
+
+  recordHitInteractor: asClass(RecordHitInteractor),
+  recordHitRepository: asClass(RecordHitRepositoryImpl),
+  recordHitValidator: asClass(RecordHitValidatorImpl),
 });
 
 export const app = {

@@ -18,29 +18,28 @@ import { RecordHitInteractor } from '../app/record-hit/record-hit.interactor';
 
 const expressApp: express.Application = express();
 
-expressApp.use(
+const sessionMiddle = [
   session({
     secret: 'dale',
     resave: true,
     saveUninitialized: true,
     cookie: { maxAge: 60000 },
   }),
-);
+  passport.initialize(),
+  passport.session()
+]
 
 expressApp.use(bodyParser.urlencoded({ extended: true }));
 expressApp.use(bodyParser.json());
 
-expressApp.use(passport.initialize());
-expressApp.use(passport.session());
+expressApp.get('/register', sessionMiddle, loginController.getRegister);
+expressApp.post('/register', sessionMiddle, loginController.postRegister);
+expressApp.get('/login', sessionMiddle, loginController.getLogin);
+expressApp.post('/login', sessionMiddle, passport.authenticate('local'), loginController.handleLogin);
 
-expressApp.get('/register', loginController.getRegister);
-expressApp.post('/register', loginController.postRegister);
-expressApp.get('/login', loginController.getLogin);
-expressApp.post('/login', passport.authenticate('local'), loginController.handleLogin);
+expressApp.get('/', sessionMiddle, homeController.getIndex);
 
-expressApp.get('/', homeController.getIndex);
-
-expressApp.use('/web', webRouter);
+expressApp.use('/web', sessionMiddle, webRouter);
 expressApp.use('/api', apiRouter);
 
 /**

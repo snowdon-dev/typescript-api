@@ -2,8 +2,10 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import { Request, Response } from 'express';
 import session from 'express-session';
-
+import path from 'path';
 import passport from 'passport';
+
+import { renderFile } from 'ejs';
 
 import * as loginController from './controllers/login';
 import * as homeController from './controllers/home';
@@ -31,6 +33,9 @@ const sessionMiddle = [
 
 expressApp.use(bodyParser.urlencoded({ extended: true }));
 expressApp.use(bodyParser.json());
+
+expressApp.engine('html', renderFile);
+expressApp.set('views', path.resolve(__dirname, '../../', 'views'));
 
 expressApp.get('/register', sessionMiddle, loginController.getRegister);
 expressApp.post('/register', sessionMiddle, loginController.postRegister);

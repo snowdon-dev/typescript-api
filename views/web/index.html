@@ -1,1 +1,22 @@
-<h1>Authed route</h1>
+<h1>Admin</h1>
+
+<h4>Submit URL:</h4>
+<form method="POST" action="api/shorten">
+    <div>
+        <label>awinaffid:</label>
+        <input type="number" name="awinaffid" required>
+    </div>
+    <div>
+        <label>awinmid:</label>
+        <input type="number" name="awinmid">
+    </div>
+    <div>
+        <label>endpoint:</label>
+        <input type="text" name="endpoint">
+    </div>
+    <div>
+        <label>platform:</label>
+        <input type="text" name="platform">
+    </div>
+    <button type="submit">Submit</button>
+</form>

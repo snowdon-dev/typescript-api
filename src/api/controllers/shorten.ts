@@ -4,13 +4,14 @@ import { app } from '../register';
 import { ShortenInteractor } from '../../app/shorten/shorten.interactor';
 import { ShortenInput } from '../../app/shorten/shorten.in';
 
-export const getShorten = async (req: Request, res: Response): Promise<void> => {
+export const requestShorten = async (req: Request, res: Response): Promise<void> => {
   const interactor = app.container.resolve<ShortenInteractor>('shortenInteractor');
+  const lookup = req.method === 'POST' ? 'body' : 'query';
   const request: ShortenInput = {
-    awinaffid: req.query.awinaffid,
-    awinmid: req.query.awinmid,
-    platform: req.query.platform,
-    endpoint: decodeURIComponent(req.query.p)
+    awinaffid: req[lookup].awinaffid,
+    awinmid: req[lookup].awinmid,
+    platform: req[lookup].platform,
+    endpoint: decodeURIComponent(req[lookup].p)
       // unsure if required but..
       .replace('[[', '')
       .replace(']]', ''),

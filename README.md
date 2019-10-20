@@ -52,8 +52,6 @@ Connection: keep-alive
 
 Once you have the short url, any GET requests will redirect to then endpoint (p) from the inital `LinkEntry`. 
 
-> Note the cookie header is only present for now, it will be removed. 
-
 ```console
 $ curl -i "localhost:3000/Xe8u";
 HTTP/1.1 302 Found

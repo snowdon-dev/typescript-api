@@ -56,20 +56,24 @@ expressApp.get(
     const input: FindLinkInput = {
       uid: req.params.uid,
     };
-    const getLink = app.container.resolve<FindLinkInteractor>('findLinkInteractor');
-    const getLinkRes = await getLink.execute(input);
-    const recordHit = app.container.resolve<RecordHitInteractor>('recordHitInteractor');
-    const result = await recordHit.execute({ uid: req.params.uid });
-    if (!result) {
-      res.json({ error: 'Service unavaliable' });
+    try {
+      const getLink = app.container.resolve<FindLinkInteractor>('findLinkInteractor');
+      const getLinkRes = await getLink.execute(input);
+      const recordHit = app.container.resolve<RecordHitInteractor>('recordHitInteractor');
+      const result = await recordHit.execute({ uid: req.params.uid });
+      if (!result) {
+        res.json({ error: 'Service unavaliable' });
+        return;
+      }
+      if (getLinkRes.error) {
+        res.json(getLinkRes);
+        return;
+      }
+      res.redirect(getLinkRes.url);
       return;
+    } catch (e) {
+      res.json(e.toString());
     }
-    if (getLinkRes.error) {
-      res.json(getLinkRes);
-      return;
-    }
-    res.redirect(getLinkRes.url);
-    return;
   },
 );
 

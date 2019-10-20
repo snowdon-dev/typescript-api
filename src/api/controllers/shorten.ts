@@ -11,11 +11,18 @@ export const requestShorten = async (req: Request, res: Response): Promise<void>
     awinaffid: req[lookup].awinaffid,
     awinmid: req[lookup].awinmid,
     platform: req[lookup].platform,
-    endpoint: decodeURIComponent(req[lookup].p)
-      // unsure if required but..
-      .replace('[[', '')
-      .replace(']]', ''),
+    endpoint:
+      req[lookup].p &&
+      decodeURIComponent(req[lookup].p)
+        // unsure if required but..
+        .replace('[[', '')
+        .replace(']]', ''),
   };
-  const repsonse = await interactor.execute(request);
-  res.json(repsonse);
+  try {
+    const repsonse = await interactor.execute(request);
+    res.json(repsonse);
+    return;
+  } catch (e) {
+    res.json(e.toString());
+  }
 };

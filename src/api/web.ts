@@ -10,7 +10,10 @@ app.use(ensureLoggedIn());
 app.get('/', webController.getIndex);
 
 app.get('/listing', (req, res) => {
-  console.log(req)
+  res.send(`
+  <h1>Link listings</h1>
+  `);
+  res.end();
 });
 
 export const web = app;

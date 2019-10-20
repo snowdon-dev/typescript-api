@@ -1,6 +1,5 @@
 import { Router } from 'express';
 import * as shortenController from './controllers/shorten';
-import { allow } from 'joi';
 
 const app = Router();
 

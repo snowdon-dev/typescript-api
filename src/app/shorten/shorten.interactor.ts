@@ -24,7 +24,6 @@ export class ShortenInteractor implements Interactor {
 
   async execute(request: ShortenInput): Promise<ShortenOutput> {
     const result = this.shortenValidator.validate(request);
-
     if (!result.valid) {
       throw this.errorFactory.getError(ErrorType.validation, result.error);
     }

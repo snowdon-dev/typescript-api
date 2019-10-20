@@ -28,8 +28,8 @@ const sessionMiddle = [
     cookie: { maxAge: 60000 },
   }),
   passport.initialize(),
-  passport.session()
-]
+  passport.session(),
+];
 
 expressApp.use(bodyParser.urlencoded({ extended: true }));
 expressApp.use(bodyParser.json());

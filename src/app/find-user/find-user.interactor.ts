@@ -28,9 +28,9 @@ export class FindUserInteractor implements Interactor {
         user: {
           id: userResult.id,
           firstname: userResult.firstname,
-          lastname: userResult.email,
+          lastname: userResult.lastname,
           email: userResult.email,
-          username: userResult.email,
+          username: userResult.username,
           password: userResult.password,
         },
       };

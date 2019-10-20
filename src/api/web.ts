@@ -9,4 +9,8 @@ app.use(ensureLoggedIn());
 
 app.get('/', webController.getIndex);
 
+app.get('/listing', (req, res) => {
+  console.log(req)
+});
+
 export const web = app;

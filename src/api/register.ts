@@ -25,6 +25,8 @@ import { RecordHitValidatorImpl } from '../data/record-hit/record-hit.validator.
 
 const container = createContainer({ injectionMode: InjectionMode.CLASSIC });
 container.register({
+  baseName: asValue('localhost:3000/'),
+
   db: asValue(db),
   joi: asValue(joi),
 

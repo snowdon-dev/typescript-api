@@ -20,6 +20,7 @@ export class ShortenInteractor implements Interactor {
     private shortenValidator: ShortenValidator,
     private shortenRepository: ShortenRepository,
     private errorFactory: ApplicationErrorFactory,
+    private baseName: string,
   ) {}
 
   async execute(request: ShortenInput): Promise<ShortenOutput> {
@@ -37,8 +38,6 @@ export class ShortenInteractor implements Interactor {
       // generated uids may not be unique, lets check
       uniqueResult = await this.shortenRepository.ensureUniqueGUID(uid);
     }
-
-    const baseName = process.env.NODE_ENV !== 'production' ? 'localhost:3000/' : false; // @todo implement production using injection for use with configs
 
     const entry = new LinkEntry(
       Number(request.awinaffid),
@@ -60,7 +59,7 @@ export class ShortenInteractor implements Interactor {
     }
 
     return {
-      url: baseName + uid,
+      url: this.baseName + uid,
     };
   }
 }

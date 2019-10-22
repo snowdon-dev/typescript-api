@@ -46,6 +46,10 @@ describe('Shorten interactor', () => {
           name: 'errorFactory',
           useValue: errorFactory,
         },
+        {
+          name: 'baseName',
+          useValue: 'localhost:3000/',
+        },
       ]) as ShortenInteractor;
     });
 
@@ -94,6 +98,10 @@ describe('Shorten interactor', () => {
           name: 'errorFactory',
           useValue: errorFactory,
         },
+        {
+          name: 'baseName',
+          useValue: 'localhost:3000/',
+        },
       ]) as ShortenInteractor;
     });
 
@@ -134,6 +142,10 @@ describe('Shorten interactor', () => {
         {
           name: 'errorFactory',
           useValue: errorFactory,
+        },
+        {
+          name: 'baseName',
+          useValue: 'localhost:3000/',
         },
       ]) as ShortenInteractor;
     });

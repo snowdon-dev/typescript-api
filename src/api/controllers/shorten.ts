@@ -23,6 +23,6 @@ export const requestShorten = async (req: Request, res: Response): Promise<void>
     res.json(repsonse);
     return;
   } catch (e) {
-    res.json(e.toString());
+    res.json(e);
   }
 };

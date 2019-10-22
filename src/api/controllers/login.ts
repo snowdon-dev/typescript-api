@@ -43,6 +43,6 @@ export const postRegister = async (req: Request, res: Response): Promise<void> =
       res.redirect('/register');
     }
   } catch (e) {
-    res.end(e.toString());
+    res.end(e);
   }
 };

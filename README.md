@@ -75,7 +75,7 @@ platform  (optinal) : string
 p         (required): string  // endpoint url to redirect to
 ```
 returns (json):
-````
+```
 {
     url: string
 }

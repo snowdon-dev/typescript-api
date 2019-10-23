@@ -72,7 +72,7 @@ params:
 awinaffid (required): integer
 awinmid   (required): integer
 platform  (optinal) : string
-p         (required): string
+p         (required): string  // endpoint url to redirect to
 ```
 returns (json):
 ````

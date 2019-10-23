@@ -22,7 +22,7 @@ export class LinkEntryModel implements Model {
       awinmid: this.awinmid,
       endpoint: this.endpoint,
       guid: this.guid,
-      unixTime: this.unixTime,
+      unixTime: new Date(this.unixTime),
       platform: this.platform,
     };
   }
@@ -53,7 +53,7 @@ export class LinkEntryModel implements Model {
     }
 
     if (linkEntry.unixTime) {
-      this.unixTime = linkEntry.unixTime;
+      this.unixTime = linkEntry.unixTime.getTime();
     }
 
     if (linkEntry.platform) {

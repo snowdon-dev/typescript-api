@@ -13,7 +13,7 @@ export class LinkHitModel implements Model {
   toEntity(): LinkHit {
     return {
       id: this.$loki,
-      time: this.time,
+      time: new Date(this.time),
       uid: this.uid,
     };
   }
@@ -29,7 +29,7 @@ export class LinkHitModel implements Model {
       this.uid = hit.uid;
     }
     if (hit.time) {
-      this.time = hit.time;
+      this.time = hit.time.getTime();
     }
   }
 }

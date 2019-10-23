@@ -44,10 +44,7 @@ export class ShortenInteractor implements Interactor {
       Number(request.awinmid),
       request.endpoint,
       uid,
-
-      // unix time has compatibility with any database implementation
-      new Date().getTime(),
-
+      new Date(),
       request.platform,
     );
 

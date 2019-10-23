@@ -7,7 +7,7 @@ export class LinkEntry implements Entity {
     public awinmid: number,
     public endpoint: string,
     public guid: string,
-    public unixTime: number,
+    public unixTime: Date,
     public platform?: string,
     public id?: ID,
   ) {}

@@ -9,7 +9,7 @@ export class RecordHitRepositoryImpl implements RecordHitRepository {
     const hit = this.db.hits.insert(
       new LinkHitModel({
         uid,
-        time: new Date().getTime(),
+        time: new Date(),
       }),
     );
 

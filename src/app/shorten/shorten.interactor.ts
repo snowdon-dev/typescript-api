@@ -9,10 +9,10 @@ import { ShortenValidator } from './shorten.validator';
 
 import { LinkEntry } from '../core/entities/link-entry';
 
-import { uidGen } from '../core/utils/rng';
 
 // Length of the unique identifier to generate.
 // 4 character identifier is hard coded in the routing
+// 4 ^ 62 avaliable combinations
 const uidLength = 4;
 
 export class ShortenInteractor implements Interactor {
@@ -21,6 +21,7 @@ export class ShortenInteractor implements Interactor {
     private shortenRepository: ShortenRepository,
     private errorFactory: ApplicationErrorFactory,
     private baseName: string,
+    private linkUidGenerator: (strLength: number) => string,
   ) {}
 
   async execute(request: ShortenInput): Promise<ShortenOutput> {
@@ -33,7 +34,7 @@ export class ShortenInteractor implements Interactor {
     let uniqueResult = false;
     let uid;
     while (!uniqueResult) {
-      uid = uidGen(uidLength); // 4 ^ 62 avaliable combinations
+      uid = this.linkUidGenerator(uidLength);
 
       // generated uids may not be unique, lets check
       uniqueResult = await this.shortenRepository.ensureUniqueGUID(uid);

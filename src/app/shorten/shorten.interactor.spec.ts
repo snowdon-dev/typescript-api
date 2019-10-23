@@ -14,6 +14,7 @@ describe('Shorten interactor', () => {
   let shortenValidator;
   let errorFactory;
   let repositoryMock: jest.Mock;
+  let uidGenMock: jest.Mock;
 
   describe('execute validation fails', () => {
     beforeEach(() => {
@@ -49,6 +50,10 @@ describe('Shorten interactor', () => {
         {
           name: 'baseName',
           useValue: 'localhost:3000/',
+        },
+        {
+          name: 'linkUidGenerator',
+          useValue: () => '0000',
         },
       ]) as ShortenInteractor;
     });
@@ -102,6 +107,10 @@ describe('Shorten interactor', () => {
           name: 'baseName',
           useValue: 'localhost:3000/',
         },
+        {
+          name: 'linkUidGenerator',
+          useValue: () => '0000',
+        },
       ]) as ShortenInteractor;
     });
 
@@ -147,6 +156,10 @@ describe('Shorten interactor', () => {
           name: 'baseName',
           useValue: 'localhost:3000/',
         },
+        {
+          name: 'linkUidGenerator',
+          useValue: uidGenMock = jest.fn(() => '000f'),
+        },
       ]) as ShortenInteractor;
     });
 
@@ -154,7 +167,8 @@ describe('Shorten interactor', () => {
       const response = await interactor.execute(request);
       const parts = response.url.split('/');
       expect(parts[0]).toBe('localhost:3000');
-      expect(parts[1]).toMatch(/^[a-zA-Z0-9]{4}$/);
+      expect(parts[1]).toBe('000f');
+      expect(uidGenMock).toBeCalledWith(4);
     });
   });
 });

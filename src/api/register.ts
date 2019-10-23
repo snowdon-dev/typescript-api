@@ -2,6 +2,7 @@ import { asClass, asValue, createContainer, InjectionMode } from 'awilix';
 
 import { db } from '../data/database';
 import * as joi from 'joi';
+import { simple as uidGen } from '../app/uid-generator/uid-generator';
 
 import { ApplicationErrorFactoryImpl } from '../data/core/errors/application-error-factory.impl';
 
@@ -13,12 +14,15 @@ import { RegisterRepositoryImpl } from '../data/register/register.repository.imp
 import { FindUserInteractor } from '../app/find-user/find-user.interactor';
 import { FindUserValidatorImpl } from '../data/find-user/find-user.validator.impl';
 import { FindUserRepositoryImpl } from '../data/find-user/find-user.repository.impl';
+
 import { ShortenInteractor } from '../app/shorten/shorten.interactor';
 import { ShortenValidatorImpl } from '../data/shorten/shorten.validator.impl';
 import { ShortenRepositoryImpl } from '../data/shorten/shorten.repository.impl';
+
 import { FindLinkInteractor } from '../app/find-link/find-link.interactor';
 import { FindLinkRepositoryImpl } from '../data/find-link/find-link.repository.impl';
 import { FindLinkValidatorImpl } from '../data/find-link/find-link.validator.impl';
+
 import { RecordHitInteractor } from '../app/record-hit/record-hit.interactor';
 import { RecordHitRepositoryImpl } from '../data/record-hit/record-hit.repository.impl';
 import { RecordHitValidatorImpl } from '../data/record-hit/record-hit.validator.impl';
@@ -26,6 +30,7 @@ import { RecordHitValidatorImpl } from '../data/record-hit/record-hit.validator.
 const container = createContainer({ injectionMode: InjectionMode.CLASSIC });
 container.register({
   baseName: asValue(process.env.NODE_ENV !== 'production' ? 'localhost:3000/' : undefined),
+  linkUidGenerator: asValue(uidGen),
 
   db: asValue(db),
   joi: asValue(joi),

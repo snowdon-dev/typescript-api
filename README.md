@@ -3,8 +3,6 @@
 Development is happening on branch `develop/ds/staging`
 
 ## Development
-- Add GUI link submission panel
-- Use PUT or POST request type for inputing inital URL
 - Docker dev environment rejig - reload (nodemon etc setup)
 - E2e testing
 - Layer testing
@@ -31,12 +29,11 @@ $ docker-compose up
 $ node build/api/index.js
 ```
 
-## Hiting the api
+## API usage example
 
-First you must make a `LinkEntry` to get the shortend URL
+First to get a short url you must create a `LinkEntry`.
 
 The following example uses the bash `curl` command to make a GET request:
-
 ```console
 $ curl -i "localhost:3000/api/shorten?awinaffid=202937&awinmid=2832&platform=dl&p=%5B%5Bhttps%3A%2F%2Fwww.footasylum.com%2Fkids%2Fkidsfootwear%2Fjunior-sizes-3-65%2Fadidas-originals-juniorgazelle-trainer-tactile-rose-cloud-white-4037450%2F%5D%5D";
 HTTP/1.1 200 OK
@@ -50,7 +47,7 @@ Connection: keep-alive
 {"url":"localhost:3000/Xe8u"}
 ```
 
-Once you have the short url, any GET requests will redirect to then endpoint (p) from the inital `LinkEntry`. 
+Once you have the short url, any GET requests will redirect to the endpoint (p) from the inital `LinkEntry`. 
 
 ```console
 $ curl -i "localhost:3000/Xe8u";
@@ -64,3 +61,28 @@ Date: Sat, 19 Oct 2019 15:03:19 GMT
 Connection: keep-alive
 
 Found. Redirecting to https://www.footasylum.com/kids/kidsfootwear/junior-sizes-3-65/adidas-originals-juniorgazelle-trainer-tactile-rose-cloud-white-4037450/
+```
+
+### API
+
+#### /api/shorten
+type: POST | GET
+params: 
+```
+awinaffid (required): integer
+awinmid   (required): integer
+platform  (optinal) : string
+p         (required): string
+```
+returns (json):
+````
+{
+    url: string
+}
+
+#### /[a-zA-Z0-9]{4}
+type: GET
+returns (header field(s))
+```
+Location: string
+```

@@ -80,6 +80,7 @@ returns (json):
     url: string
 }
 
+```
 #### /[a-zA-Z0-9]{4}
 type: GET
 returns (header field(s))
